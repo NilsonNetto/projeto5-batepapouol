@@ -1,6 +1,7 @@
 
 let userName;
 let nameObj;
+let messageObj;
 
 askName();
 
@@ -62,4 +63,30 @@ function showMessages(messages){
     messageArea.innerHTML += 'esse é private';
   }
 }
+}
+
+function sendMessage(){
+  let writeMessage = document.querySelector('.message').value;
+  messageObj = {
+    from: userName,
+    to: "Todos",
+    text: writeMessage,
+    type: "message"
+  }
+  document.querySelector('.message').value = '';
+  uploadMessage();
+}
+
+function uploadMessage(){
+  let promisse = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageObj);
+  promisse.then(messageUploaded);
+  promisse.catch(uploadError);
+}
+
+function messageUploaded(){
+  console.log('a mensagem foi enviada')
+}
+
+function uploadError(){
+  console.log('NÃO FOI ENVIADA')
 }
