@@ -5,16 +5,40 @@ let messageObj;
 let oldLastMessage;
 let newLastMessage;
 
-askName();
+
+let inputMessageSelect = document.querySelector('.input');
+inputMessageSelect.addEventListener('keypress', function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.querySelector('.send-message').click();
+  }
+});
+
+let inputNameSelect = document.querySelector('.login-name');
+inputNameSelect.addEventListener('keypress', function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.querySelector('.login-button').click();
+  }
+});
+
+document.querySelector('.login-name').value = '';
 
 function askName() {
-  userName = prompt('Qual é o seu nome?');
+  userName = document.querySelector('.login-name').value;
   nameObj = {
     name: userName
   }
+  loadingToggle();
   joinRoom();
+  clearInput();
 }
 
+function loadingToggle() {
+  document.querySelector('.login-name').classList.toggle('hide');
+  document.querySelector('.login-button').classList.toggle('hide');
+  document.querySelector('.loading').classList.toggle('hide');
+}
 
 function joinRoom() {
   let promisse = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', nameObj);
@@ -24,6 +48,7 @@ function joinRoom() {
 }
 
 function joinedRoom() {
+  document.querySelector('.login-page').classList.add('hide');
   console.log('entrou')
   setInterval(statusConnected, 5000);
   receiveMessages()
@@ -33,7 +58,8 @@ function joinedRoom() {
 function joinError(error) {
   if (error.request.status === 400) {
     alert("Este nome já está em uso, por favor escolha outro nome")
-    askName()
+    loadingToggle();
+    document.querySelector('.login-name').value = '';
   }
 }
 
@@ -101,10 +127,15 @@ function sendMessage() {
     text: writeMessage,
     type: "message"
   }
-  document.querySelector('.message-write').value = '';
+  clearInput();
   uploadMessage();
 }
 
+function clearInput() {
+  document.querySelector('.message-write').value = '';
+}
+
+1
 function uploadMessage() {
   let promisse = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageObj);
   promisse.then(messageUploaded);
@@ -129,9 +160,3 @@ function scrollToLastMessage() {
   }
 }
 
-/* function enterClickForMessage(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    document.querySelector(".send-message").click();
-  }
-} */
