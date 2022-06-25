@@ -20,7 +20,7 @@
   </div>
   <header>
     <div class="logo"><img src="assets/logo1.png" alt="Logo"></div>
-    <div class="participants"><ion-icon name="people"></ion-icon></div>
+    <div class="participants" onclick="showSidebar()"><ion-icon name="people"></ion-icon></div>
   </header>
   <main>
     <div class="chat">
@@ -30,6 +30,24 @@
     <div class="input"><input type="text" class="message-write" placeholder="Escreva aqui..."></div>    
     <div class="send-message" onclick="sendMessage()"><ion-icon name="paper-plane-outline"></ion-icon></div>
   </footer>
+  <div class="sidebar hide">
+    <div class="participants-online">
+
+    </div>
+    <div class="message-visibility">
+      <h2>Escolha a visibilidade:</h2>
+      <div class="public-message">
+        <ion-icon name="lock-open"></ion-icon>
+        <span>Público</span>
+      </div>
+      <div class="private-message">
+        <ion-icon name="lock-closed"></ion-icon>
+        <span>Reservadamente</span>
+      </div>
+    </div>
+  </div>
+  <div class="dark-background hide" onclick="showSidebar()">
+  </div>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

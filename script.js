@@ -115,20 +115,22 @@ function showMessages(messages) {
 
       }
     }
-    scrollToLastMessage();
   }
+  scrollToLastMessage();
 }
 
 function sendMessage() {
-  let writeMessage = document.querySelector('.message-write').value;
-  messageObj = {
-    from: userName,
-    to: "Todos",
-    text: writeMessage,
-    type: "message"
+  let writeMessage = document.querySelector('.message-write').value.trim();
+  if (writeMessage !== '') {
+    messageObj = {
+      from: userName,
+      to: "Todos",
+      text: writeMessage,
+      type: "message"
+    }
+    clearInput();
+    uploadMessage();
   }
-  clearInput();
-  uploadMessage();
 }
 
 function clearInput() {
@@ -152,7 +154,7 @@ function uploadError() {
 }
 
 function scrollToLastMessage() {
-  let lastMessage = document.querySelectorAll('.time');
+  let lastMessage = document.querySelectorAll('.message');
   newLastMessage = lastMessage[lastMessage.length - 1].innerHTML;
   if (newLastMessage !== oldLastMessage) {
     lastMessage[lastMessage.length - 1].scrollIntoView();
@@ -160,3 +162,33 @@ function scrollToLastMessage() {
   }
 }
 
+function showSidebar() {
+  let sidebar = document.querySelector('.sidebar');
+  let darkBackground = document.querySelector('.dark-background');
+  sidebar.classList.toggle('hide');
+  darkBackground.classList.toggle('hide');
+  getParticipants()
+  setInterval(getParticipants, 10000);
+}
+
+function getParticipants() {
+  promisse = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+  promisse.then(showParticipants);
+}
+
+function showParticipants(participants) {
+  console.log('mostrandoo')
+  let participantsList = document.querySelector('.participants-online');
+  participantsList.innerHTML = `<h2>Escolha um contato para enviar mensagem:</h2>
+  <div class="all">
+    <ion-icon name="people"></ion-icon>
+    <span>Todos</span>
+  </div>`
+  for (let i = 0; i < participants.data.length; i++) {
+    participantsList.innerHTML += `
+    <div class="people">
+    <ion-icon name="person-circle"></ion-icon>
+    <span>${participants.data[i].name}</span>
+  </div>`
+  }
+}
