@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,45 +9,63 @@
   <link rel="stylesheet" href="styles.css">
   <title>Bate Papo UOL</title>
 </head>
+
 <body>
   <div class="login-page">
     <img src="assets/logo1.png" alt="Logo">
     <input class="login-name" type="text" placeholder="Digite seu nome">
-    <button class = "login-button" onclick="askName()">Entrar</button>
-    <div class="loading hide"> 
+    <button class="login-button" onclick="askName()">Entrar</button>
+    <div class="loading hide">
       <img src="assets/loading.gif" alt="Loading">
       <p>Entrando...</p>
     </div>
   </div>
   <header>
     <div class="logo"><img src="assets/logo1.png" alt="Logo"></div>
-    <div class="participants" onclick="showSidebar()"><ion-icon name="people"></ion-icon></div>
+    <div class="participants" onclick="showSidebar()">
+      <ion-icon name="people"></ion-icon>
+    </div>
   </header>
   <main>
     <div class="chat">
     </div>
   </main>
   <footer>
-    <div class="input"><input type="text" class="message-write" placeholder="Escreva aqui..."></div>    
-    <div class="send-message" onclick="sendMessage()"><ion-icon name="paper-plane-outline"></ion-icon></div>
+    <div class="input">
+      <input type="text" class="message-write" placeholder="Escreva aqui...">
+      <div class="messageoutput">
+        <p>Enviando mensagem para <span class="message-to">Todos</span><span class="visibility">(Público)</span></p>
+      </div>
+    </div>
+
+    <div class="send-message" onclick="sendMessage()">
+      <ion-icon name="paper-plane-outline"></ion-icon>
+    </div>
   </footer>
   <div class="sidebar hide">
     <div class="participants-online">
+      <h3>Escolha um contato para enviar mensagem:</h3>
+      <div class="all" onclick="selectParticipant(this)">
+        <ion-icon name="people"></ion-icon>
+        <span>Todos</span>
+      </div>
+      <div class="participants-list">
 
+      </div>
     </div>
     <div class="message-visibility">
-      <h2>Escolha a visibilidade:</h2>
-      <div class="public-message">
+      <h4>Escolha a visibilidade:</h4>
+      <div class="public-message" onclick="messageVisibility(this)">
         <ion-icon name="lock-open"></ion-icon>
         <span>Público</span>
       </div>
-      <div class="private-message">
+      <div class="private-message" onclick="messageVisibility(this)">
         <ion-icon name="lock-closed"></ion-icon>
         <span>Reservadamente</span>
       </div>
     </div>
   </div>
-  <div class="dark-background hide" onclick="showSidebar()">
+  <div class="dark-background hide" onclick="hideSidebar()">
   </div>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -55,4 +74,5 @@
   <script src="script.js"></script>
 
 </body>
+
 </html>

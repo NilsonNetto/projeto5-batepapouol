@@ -1,9 +1,12 @@
 
-let userName;
+let username;
+let messageTo = "Todos";
+let messageType = "message";
 let nameObj;
 let messageObj;
 let oldLastMessage;
 let newLastMessage;
+let participantsInterval;
 
 
 let inputMessageSelect = document.querySelector('.input');
@@ -25,9 +28,9 @@ inputNameSelect.addEventListener('keypress', function (event) {
 document.querySelector('.login-name').value = '';
 
 function askName() {
-  userName = document.querySelector('.login-name').value;
+  username = document.querySelector('.login-name').value;
   nameObj = {
-    name: userName
+    name: username
   }
   loadingToggle();
   joinRoom();
@@ -100,7 +103,7 @@ function showMessages(messages) {
       </div>
       `;
     } else if (messages.data[i].type === 'private_message') {
-      if (messages.data[i].from === userName || messages.data[i].to === userName) {
+      if (messages.data[i].from === username || messages.data[i].to === username) {
         messageArea.innerHTML += `
         <div class="message private">
           <p>
@@ -123,10 +126,10 @@ function sendMessage() {
   let writeMessage = document.querySelector('.message-write').value.trim();
   if (writeMessage !== '') {
     messageObj = {
-      from: userName,
-      to: "Todos",
+      from: username,
+      to: messageTo,
       text: writeMessage,
-      type: "message"
+      type: messageType
     }
     clearInput();
     uploadMessage();
@@ -165,10 +168,18 @@ function scrollToLastMessage() {
 function showSidebar() {
   let sidebar = document.querySelector('.sidebar');
   let darkBackground = document.querySelector('.dark-background');
-  sidebar.classList.toggle('hide');
-  darkBackground.classList.toggle('hide');
+  sidebar.classList.remove('hide');
+  darkBackground.classList.remove('hide');
   getParticipants()
-  setInterval(getParticipants, 10000);
+  participantsInterval = setInterval(getParticipants, 10000);
+}
+
+function hideSidebar() {
+  let sidebar = document.querySelector('.sidebar');
+  let darkBackground = document.querySelector('.dark-background');
+  sidebar.classList.add('hide');
+  darkBackground.classList.add('hide');
+  clearInterval(participantsInterval);
 }
 
 function getParticipants() {
@@ -177,18 +188,32 @@ function getParticipants() {
 }
 
 function showParticipants(participants) {
-  console.log('mostrandoo')
-  let participantsList = document.querySelector('.participants-online');
-  participantsList.innerHTML = `<h2>Escolha um contato para enviar mensagem:</h2>
-  <div class="all">
-    <ion-icon name="people"></ion-icon>
-    <span>Todos</span>
-  </div>`
+  console.log('atualizando participants')
+  let participantsList = document.querySelector('.participants-list');
+  participantsList.innerHTML = '';
   for (let i = 0; i < participants.data.length; i++) {
     participantsList.innerHTML += `
-    <div class="people">
+    <div class="person" onclick="selectParticipant(this)">
     <ion-icon name="person-circle"></ion-icon>
     <span>${participants.data[i].name}</span>
   </div>`
   }
+}
+
+function selectParticipant(element) {
+  const participantSelected = element.querySelector('span').innerHTML;
+  console.log(participantSelected);
+  messageTo = participantSelected;
+  document.querySelector('.message-to').innerHTML = messageTo;
+}
+
+function messageVisibility(element) {
+  const messageVisibility = element.querySelector('span').innerHTML;
+  console.log(messageVisibility);
+  if (messageVisibility === "Público") {
+    messageType = "message";
+  } else {
+    messageType = "private_message";
+  }
+  document.querySelector('.visibility').innerHTML = ` (${messageVisibility})`;
 }
