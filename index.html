@@ -34,7 +34,7 @@
     <div class="input">
       <input type="text" class="message-write" placeholder="Escreva aqui...">
       <div class="messageoutput">
-        <p>Enviando mensagem para <span class="message-to">Todos</span><span class="visibility">(Público)</span></p>
+        <p>Enviando para <span class="message-to">Todos</span><span class="visibility">(Público)</span></p>
       </div>
     </div>
 
@@ -45,9 +45,14 @@
   <div class="sidebar hide">
     <div class="participants-online">
       <h3>Escolha um contato para enviar mensagem:</h3>
-      <div class="all" onclick="selectParticipant(this)">
-        <ion-icon name="people"></ion-icon>
-        <span>Todos</span>
+      <div data-identifier="participant" class="all" onclick="selectParticipant(this)">
+        <div>
+          <ion-icon name="people"></ion-icon>
+          <span>Todos</span>
+        </div>
+        <div>
+          <ion-icon class="check-to show" name="checkmark-sharp"></ion-icon>
+        </div>
       </div>
       <div class="participants-list">
 
@@ -55,13 +60,23 @@
     </div>
     <div class="message-visibility">
       <h4>Escolha a visibilidade:</h4>
-      <div class="public-message" onclick="messageVisibility(this)">
-        <ion-icon name="lock-open"></ion-icon>
-        <span>Público</span>
+      <div data-identifier="visibility" class="public-message" onclick="messageVisibility(this)">
+        <div>
+          <ion-icon name="lock-open"></ion-icon>
+          <span>Público</span>
+        </div>
+        <div>
+          <ion-icon class="check-visibility show" name="checkmark-sharp"></ion-icon>
+        </div>
       </div>
-      <div class="private-message" onclick="messageVisibility(this)">
-        <ion-icon name="lock-closed"></ion-icon>
-        <span>Reservadamente</span>
+      <div data-identifier="visibility" class="private-message" onclick="messageVisibility(this)">
+        <div>
+          <ion-icon name="lock-closed"></ion-icon>
+          <span>Reservadamente</span>
+        </div>
+        <div>
+          <ion-icon class="check-visibility" name="checkmark-sharp"></ion-icon>
+        </div>
       </div>
     </div>
   </div>

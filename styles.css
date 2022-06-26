@@ -93,8 +93,10 @@ header img {
 
 .chat {
   width: 100vw;
+  height: calc(100vh - 170px);
   background-color: #F3F3F3;
   margin: 85px 0;
+  overflow-y: scroll;
 }
 
 .message {
@@ -175,12 +177,13 @@ footer {
 
 .sidebar {
   width: 300px;
-  height: 100%;
+  height: 100vh;
   position: fixed;
   top: 0;
   right: 0;
   z-index: 2;
   background-color: white;
+  overflow-y: auto;
 }
 
 h3 {
@@ -208,8 +211,8 @@ h4 {
 }
 
 .all,
-.message-visibility div,
-.participants-list div {
+.message-visibility>div,
+.participants-list>div {
   display: flex;
   margin: 0 0 15px 15px;
   cursor: pointer;
@@ -222,6 +225,30 @@ h4 {
   margin-top: 5px;
 }
 
+.private-message,
+.public-message,
+.all,
+.all :first-child,
+.person,
+.person :first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.person span {
+  width: 200px;
+  height: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.check-to,
+.check-visibility {
+  opacity: 0;
+  color: #28BB25;
+}
+
 .dark-background {
   width: 100vw;
   height: 100%;
@@ -229,8 +256,18 @@ h4 {
   opacity: .5;
   position: fixed;
   left: 0;
+  right: 0;
   top: 0;
+  bottom: 0;
   z-index: 1;
+}
+
+.block-scroll {
+  overflow: hidden;
+}
+
+.show {
+  opacity: 1;
 }
 
 .hide {
