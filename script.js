@@ -30,12 +30,17 @@ document.querySelector('.login-name').value = '';
 
 function askName() {
   username = document.querySelector('.login-name').value;
-  nameObj = {
-    name: username
+  if (username === "Todos" || username === "todos") {
+    alert('Este nome não é valido, por favor escolha outro nome')
+    document.querySelector('.login-name').value = '';
+  } else {
+    nameObj = {
+      name: username
+    }
+    loadingToggle();
+    joinRoom();
+    clearInput();
   }
-  loadingToggle();
-  joinRoom();
-  clearInput();
 }
 
 function loadingToggle() {
@@ -53,7 +58,6 @@ function joinRoom() {
 
 function joinedRoom() {
   document.querySelector('.login-page').classList.add('hide');
-  console.log('entrou')
   setInterval(statusConnected, 5000);
   receiveMessages()
   setInterval(receiveMessages, 3000);
@@ -196,7 +200,6 @@ function getParticipants() {
 }
 
 function showParticipants(participants) {
-  console.log('atualizando participants')
   let participantsList = document.querySelector('.participants-list');
   participantsList.innerHTML = '';
   for (let i = 0; i < participants.data.length; i++) {

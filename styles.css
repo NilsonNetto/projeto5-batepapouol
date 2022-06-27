@@ -83,6 +83,7 @@ header {
 header ion-icon {
   font-size: 45px;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 header img {
@@ -184,6 +185,7 @@ footer {
   z-index: 2;
   background-color: white;
   overflow-y: auto;
+  padding-bottom: 30px;
 }
 
 h3 {
